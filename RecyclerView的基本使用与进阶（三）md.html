@@ -1,0 +1,1561 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="RecyclerView" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="rokudol的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="回头看看自己的博客发现RecyclerVer系列还没写完。。完全忘记了。。。来补上，本篇分为两个部分： 第一部分： DefaultItemAnimator源码解析，即Google官方提供的item动画源码 第二部分： 如何写一个自己的item动画本篇就不贴效果图了，想看效果不妨自己去试试，我一直认为要学会怎么熟练的使用一个东西，就得了解这个东西是怎么运作的，不多说废话，正式开始：">
+<meta name="keywords" content="RecyclerView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RecyclerView的基本使用与进阶（三）">
+<meta property="og:url" content="http://blog.rokudol.cn/RecyclerView的基本使用与进阶（三）md.html">
+<meta property="og:site_name" content="rokudol的博客">
+<meta property="og:description" content="回头看看自己的博客发现RecyclerVer系列还没写完。。完全忘记了。。。来补上，本篇分为两个部分： 第一部分： DefaultItemAnimator源码解析，即Google官方提供的item动画源码 第二部分： 如何写一个自己的item动画本篇就不贴效果图了，想看效果不妨自己去试试，我一直认为要学会怎么熟练的使用一个东西，就得了解这个东西是怎么运作的，不多说废话，正式开始：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.rokudol.cn/images/rv3Add1.gif">
+<meta property="og:image" content="http://blog.rokudol.cn/images/rv3Add2.gif">
+<meta property="og:image" content="http://blog.rokudol.cn/images/rv3Add3.gif">
+<meta property="og:updated_time" content="2018-04-07T02:37:46.199Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RecyclerView的基本使用与进阶（三）">
+<meta name="twitter:description" content="回头看看自己的博客发现RecyclerVer系列还没写完。。完全忘记了。。。来补上，本篇分为两个部分： 第一部分： DefaultItemAnimator源码解析，即Google官方提供的item动画源码 第二部分： 如何写一个自己的item动画本篇就不贴效果图了，想看效果不妨自己去试试，我一直认为要学会怎么熟练的使用一个东西，就得了解这个东西是怎么运作的，不多说废话，正式开始：">
+<meta name="twitter:image" content="http://blog.rokudol.cn/images/rv3Add1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.rokudol.cn/RecyclerView的基本使用与进阶（三）md.html"/>
+
+
+
+
+
+  <title>RecyclerView的基本使用与进阶（三） | rokudol的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-99762574-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">rokudol的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.rokudol.cn/RecyclerView的基本使用与进阶（三）md.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="rokudol">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/23734122?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rokudol的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RecyclerView的基本使用与进阶（三）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-08T14:42:01+08:00">
+                2017-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RecyclerView/" itemprop="url" rel="index">
+                    <span itemprop="name">RecyclerView</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>回头看看自己的博客发现RecyclerVer系列还没写完。。完全忘记了。。。来补上，本篇分为两个部分：</p>
+<p><em>第一部分：</em> DefaultItemAnimator源码解析，即Google官方提供的item动画源码</p>
+<p><em>第二部分：</em> 如何写一个自己的item动画<br>本篇就不贴效果图了，想看效果不妨自己去试试，我一直认为要学会怎么熟练的使用一个东西，就得了解这个东西是怎么运作的，不多说废话，正式开始：</p>
+<a id="more"></a>
+<h1 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h1><p>打开源码可以看到该类继承自SimpleItemAnimator，再点开这个类看看，发现继承自RecyclerView.ItemAnimator，看来是SimpleItemAnimator对rv的动画进行了进一步的封装，最后DefaultItemAnimator再来具体实现想要的动画，这里不详谈SimpleItemAnimator，只看Google是怎么实现rv的item动画的，说一下涉及到的几个方法的作用：</p>
+<h2 id="方法解读"><a href="#方法解读" class="headerlink" title="方法解读"></a>方法解读</h2><ol>
+<li>animateAdd(final RecyclerView.ViewHolder holder)：添加item时调用的动画，用adapter.notifyItemInster()时会调用该方法，若需要定制自己的动画，需要将返回值更改为true</li>
+<li>animateRemove(final RecyclerView.ViewHolder holder)：删除item时调用的动画，用adapter.notifyItemRemove()时会调用该方法，若需要定制自己的动画，需要将返回值更改为true</li>
+<li>animateMove(final RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY)：item移动时调用的动画，再说明白点就是添加、删除item时调用的方法，参数看名字就知道啥意思，不多做解释，若需要定制自己的动画，需要将该返回值更改为true</li>
+<li>animateChange(RecyclerView.ViewHolder oldHolder, RecyclerView.ViewHolder newHolder, int fromX, int fromY, int toX, int toY)：item接收到notifyItemChanged()或者notifyItemRangeChanged()调用的方法，同样，若需要定制自己的动画，需要将该返回值更改为true</li>
+<li>endAnimation(RecyclerView.ViewHolder item)：动画结束时调用的方法</li>
+<li>canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder, List<object> payloads):当item改变时调用该方法itemAnimator可以决定是否要重复使用相同的ViewHolder进行动画。</object></li>
+<li>isRunning()：判断是否有动画正在执行</li>
+<li><p>runPendingAnimations()：当有等待动画时调用</p>
+<h2 id="变量解读"><a href="#变量解读" class="headerlink" title="变量解读"></a>变量解读</h2><p> private ArrayList&lt;RecyclerView.ViewHolder&gt; mPendingRemovals = new ArrayList&lt;&gt;();<br> private ArrayList&lt;RecyclerView.ViewHolder&gt; mPendingAdditions = new ArrayList&lt;&gt;();<br> private ArrayList<moveinfo> mPendingMoves = new ArrayList&lt;&gt;();<br> private ArrayList<changeinfo> mPendingChanges = new ArrayList&lt;&gt;();</changeinfo></moveinfo></p>
+<p> ArrayList&lt;RecyclerView.ViewHolder&gt; mAddAnimations = new ArrayList&lt;&gt;();<br> ArrayList&lt;RecyclerView.ViewHolder&gt; mMoveAnimations = new ArrayList&lt;&gt;();<br> ArrayList&lt;RecyclerView.ViewHolder&gt; mRemoveAnimations = new ArrayList&lt;&gt;();<br> ArrayList&lt;RecyclerView.ViewHolder&gt; mChangeAnimations = new ArrayList&lt;&gt;();</p>
+<p> ArrayList&lt;ArrayList&lt;RecyclerView.ViewHolder&gt;&gt; mAdditionsList = new ArrayList&lt;&gt;();<br> ArrayList&lt;ArrayList<moveinfo>&gt; mMovesList = new ArrayList&lt;&gt;();<br> ArrayList&lt;ArrayList<changeinfo>&gt; mChangesList = new ArrayList&lt;&gt;();<br>能看到Google用了这么多的集合，具体作用是什么？很简单，看看runPendingAnimations()方法，我们可以得出一个结论：动画时有可能存在等待情况的！也就是说，当上一个动画还未执行完成的时候，下一个动画需要等待上一个动画执行完成后才可以执行，那万一等待了多个动画咋整，用集合保存起来呀，可是增加、删除、移动、刷新就四个动画，为啥有这么多集合，仔细看看前8个，是不是两两一组的，作用是什么呢？拿Add这组解释一下：可以看到Add这组有两个集合，mPendingAdditions和mAddAnimations，前者是等待处理的动画集合，后者就是处理中的动画集合，其他几个一样。那剩下三个是干嘛的？后面用到的时候再解释</changeinfo></moveinfo></p>
+</li>
+</ol>
+<h2 id="isRunning"><a href="#isRunning" class="headerlink" title="isRunning()"></a>isRunning()</h2><pre><code>@Override
+public boolean isRunning() {
+    return (!mPendingAdditions.isEmpty() ||
+            !mPendingChanges.isEmpty() ||
+            !mPendingMoves.isEmpty() ||
+            !mPendingRemovals.isEmpty() ||
+            !mMoveAnimations.isEmpty() ||
+            !mRemoveAnimations.isEmpty() ||
+            !mAddAnimations.isEmpty() ||
+            !mChangeAnimations.isEmpty() ||
+            !mMovesList.isEmpty() ||
+            !mAdditionsList.isEmpty() ||
+            !mChangesList.isEmpty());
+}
+</code></pre><p>这个似乎没啥好解释的。。只要其中一个动画集合不为空，则返回true，即：还有动画正在执行或需要执行</p>
+<h2 id="animateAdd"><a href="#animateAdd" class="headerlink" title="animateAdd()"></a>animateAdd()</h2><pre><code>@Override
+public boolean animateAdd(final RecyclerView.ViewHolder holder) {
+    resetAnimation(holder);
+    ViewCompat.setAlpha(holder.itemView, 0);
+    mPendingAdditions.add(holder);
+    return true;
+}
+</code></pre><p>一行一行的来解读，首先是resetAnimation(holder)，这个方法是用来干嘛的，点进去看看：</p>
+<pre><code>private void resetAnimation(RecyclerView.ViewHolder holder) {
+    AnimatorCompatHelper.clearInterpolator(holder.itemView);
+    endAnimation(holder);
+}
+</code></pre><p>第一个方法是用来干嘛的？层层抽丝剥茧，终于找到这样一段：</p>
+<pre><code> @Override
+    public void clearInterpolator(View view) {
+        if (mDefaultInterpolator == null) {
+            mDefaultInterpolator = new ValueAnimator().getInterpolator();
+        }
+        view.animate().setInterpolator(mDefaultInterpolator);
+    }
+}
+</code></pre><p>看到了吗！view.animate().setInterpolator()，这是拿来干嘛的？</p>
+<p>官方解释：</p>
+<p>Sets the interpolator for the underlying animator that animates the requested properties.</p>
+<p>翻译一下：为底层动画设置内插器，使动态化请求的属性。</p>
+<p>具体作用是啥？就是用来修饰动画效果的，点到即止，不多做展开，来看看下一句</p>
+<p>endAnimation()，调用结束动画</p>
+<pre><code>@Override
+    public void endAnimation(RecyclerView.ViewHolder item) {
+        final View view = item.itemView;
+        ViewCompat.animate(view).cancel();
+        ...
+        for (int i = mAdditionsList.size() - 1; i &gt;= 0; i--) {
+            ArrayList&lt;RecyclerView.ViewHolder&gt; additions = mAdditionsList.get(i);
+            if (additions.remove(item)) {
+                ViewCompat.setAlpha(view, 1);
+                dispatchAddFinished(item);
+                if (additions.isEmpty()) {
+                    mAdditionsList.remove(i);
+                }
+            }
+        }
+        ...
+        }
+</code></pre><p>这一段就是将动画停止掉，将整个animateAdd方法连起来看看：</p>
+<ol>
+<li>开始执行添加动画时，重置添加相关的动画</li>
+<li>将需要执行添加动画的itemView的alpha值设置为0，即设置为不可见</li>
+<li><p>将需要执行添加动画的itemView添加进等待处理添加动画的集合中<br>这时候就会执行runPendingAnimations()方法：</p>
+<h2 id="runPendingAnimations"><a href="#runPendingAnimations" class="headerlink" title="runPendingAnimations()"></a>runPendingAnimations()</h2><p> public void runPendingAnimations() {</p>
+<pre><code>    boolean removalsPending = !mPendingRemovals.isEmpty();//如果待执行的删除动画为空时
+    boolean movesPending = !mPendingMoves.isEmpty();//如果待执行的移动动画为空时
+    boolean changesPending = !mPendingChanges.isEmpty();//如果待执行的刷新动画为空时
+    boolean additionsPending = !mPendingAdditions.isEmpty();//如果待执行的添加动画为空时
+    if (!removalsPending &amp;&amp; !movesPending &amp;&amp; !additionsPending &amp;&amp; !changesPending) {
+        // 没有动画需要执行时
+        return;
+    }
+    // 首先，执行删除动画
+    for (RecyclerView.ViewHolder holder : mPendingRemovals) {
+        animateRemoveImpl(holder);
+    }
+    mPendingRemovals.clear();
+    // 然后执行移动动画
+    if (movesPending) {
+        final ArrayList&lt;MoveInfo&gt; moves = new ArrayList&lt;&gt;();
+        moves.addAll(mPendingMoves);
+        mMovesList.add(moves);
+        mPendingMoves.clear();
+        Runnable mover = new Runnable() {
+            @Override
+            public void run() {
+            //将所有的删除动画放在一块一起执行
+                for (MoveInfo moveInfo : moves) {
+                    animateMoveImpl(moveInfo.holder, moveInfo.fromX, moveInfo.fromY,
+                            moveInfo.toX, moveInfo.toY);
+                }
+                //执行完成后清空
+                moves.clear();
+                mMovesList.remove(moves);
+            }
+        };
+        //如果有待执行的删除动画
+        if (removalsPending) {
+            View view = moves.get(0).holder.itemView;
+            ViewCompat.postOnAnimationDelayed(view, mover, getRemoveDuration());
+        } else {
+            mover.run();
+        }
+    }
+    // 执行更新动画，与移动动画并行执行
+    if (changesPending) {
+        final ArrayList&lt;ChangeInfo&gt; changes = new ArrayList&lt;&gt;();
+        changes.addAll(mPendingChanges);
+        mChangesList.add(changes);
+        mPendingChanges.clear();
+        Runnable changer = new Runnable() {
+            @Override
+            public void run() {
+            //将所有待执行的更新动画一块执行
+                for (ChangeInfo change : changes) {
+                    animateChangeImpl(change);
+                }
+                //执行完成后清空
+                changes.clear();
+                mChangesList.remove(changes);
+            }
+        };
+        //如果有待执行的删除动画
+        if (removalsPending) {
+            RecyclerView.ViewHolder holder = changes.get(0).oldHolder;
+            ViewCompat.postOnAnimationDelayed(holder.itemView, changer, getRemoveDuration());
+        } else {
+            changer.run();
+        }
+    }
+    // 执行添加动画
+    if (additionsPending) {
+        final ArrayList&lt;RecyclerView.ViewHolder&gt; additions = new ArrayList&lt;&gt;();
+        additions.addAll(mPendingAdditions);
+        mAdditionsList.add(additions);
+        mPendingAdditions.clear();
+        Runnable adder = new Runnable() {
+            @Override
+            public void run() {
+            //将所有添加动画放在一块执行
+                for (RecyclerView.ViewHolder holder : additions) {
+                    animateAddImpl(holder);
+                }
+                //动画执行完成后清空
+                additions.clear();
+                mAdditionsList.remove(additions);
+            }
+        };
+        //如果删除、移动、更新动画某一个为空时，获取每一个动画的持续时间
+        if (removalsPending || movesPending || changesPending) {
+            long removeDuration = removalsPending ? getRemoveDuration() : 0;
+            long moveDuration = movesPending ? getMoveDuration() : 0;
+            long changeDuration = changesPending ? getChangeDuration() : 0;
+            //添加动画的持续时间 = =删除动画持续时间+(移动动画或更新动画持续时间最长的一个)
+            long totalDelay = removeDuration + Math.max(moveDuration, changeDuration);
+            View view = additions.get(0).itemView;
+            ViewCompat.postOnAnimationDelayed(view, adder, totalDelay);
+        } else {
+            adder.run();
+        }
+    }
+}
+</code></pre></li>
+</ol>
+<p>以上就是处理待执行动画的所有步骤，有详细注释就不做解释了，细心的同学可能有注意到，添加、删除、移动、更新动画都有一个impl方法，这个方法里就是具体的动画！先来看看添加动画：</p>
+<h2 id="animateAddImpl"><a href="#animateAddImpl" class="headerlink" title="animateAddImpl"></a>animateAddImpl</h2><pre><code>void animateAddImpl(final RecyclerView.ViewHolder holder) {
+    final View view = holder.itemView;
+    final ViewPropertyAnimatorCompat animation = ViewCompat.animate(view);
+    mAddAnimations.add(holder);
+    animation.alpha(1).setDuration(getAddDuration()).
+            setListener(new VpaListenerAdapter() {
+                //动画开始时，调用dispatchAddStarting，即通知可以开始动画了！
+                @Override
+                public void onAnimationStart(View view) {
+                    dispatchAddStarting(holder);
+                }
+
+                @Override
+                public void onAnimationCancel(View view) {
+                    ViewCompat.setAlpha(view, 1);
+                }
+
+                //动画结束时，清空动画的监听，通知动画已结束，将处理中的动画集合移除当前这一个，如果当前已经没有动画在执行了，结束所有动画
+                @Override
+                public void onAnimationEnd(View view) {
+                    animation.setListener(null);
+                    dispatchAddFinished(holder);
+                    mAddAnimations.remove(holder);
+                    dispatchFinishedWhenDone();
+                }
+            }).start();
+}
+</code></pre><p>简单讲讲animateMove：</p>
+<h2 id="animateMove"><a href="#animateMove" class="headerlink" title="animateMove()"></a>animateMove()</h2><pre><code>@Override
+    public boolean animateMove(final RecyclerView.ViewHolder holder, int fromX, int fromY,
+                               int toX, int toY) {
+        final View view = holder.itemView;
+        fromX += ViewCompat.getTranslationX(holder.itemView);
+        fromY += ViewCompat.getTranslationY(holder.itemView);
+        resetAnimation(holder);
+        int deltaX = toX - fromX;
+        int deltaY = toY - fromY;
+        if (deltaX == 0 &amp;&amp; deltaY == 0) {
+            dispatchMoveFinished(holder);
+            return false;
+        }
+        if (deltaX != 0) {
+            ViewCompat.setTranslationX(view, -deltaX);
+        }
+        if (deltaY != 0) {
+            ViewCompat.setTranslationY(view, -deltaY);
+        }
+        mPendingMoves.add(new MoveInfo(holder, fromX, fromY, toX, toY));
+        return true;
+    }
+</code></pre><p>其实很好理解，就说一下deltaX和deltaY，Google这样计算的目的就是为了在上一个item在移出的时候，当前这个item不会立即移动到当前上一个item的位置。</p>
+<p>其他几个动画类似，就不做解释了，在这里也可以看出，具体是用的什么动画，动画时什么效果，都是在animatexxximpl中执行的，如果想要定制自己的动画，直接改这几个方法就可以了</p>
+<p>接下来讲讲如何定制属于自己的item动画</p>
+<h1 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h1><p>前面说了，动画的具体实现都是在各个animateXXXImpl()中，那么要定制属于我们自己item动画，只需要更改animateXXXImpl()方法就可以了，那么我们先来做一个自己的添加动画</p>
+<h2 id="animateRemoveImpl"><a href="#animateRemoveImpl" class="headerlink" title="animateRemoveImpl()"></a>animateRemoveImpl()</h2><p>期望效果：这个item删除时，逐渐透明且慢慢缩小<br>很简单的效果，我们只需要设置alpha，scaleX和scaleY就可以了：</p>
+<pre><code>private void animateRemoveImpl(final RecyclerView.ViewHolder holder) {
+    final View view = holder.itemView;
+    final ViewPropertyAnimatorCompat animation = ViewCompat.animate(view);
+    mRemoveAnimations.add(holder);
+    animation.setDuration(getRemoveDuration())
+            .alpha(0).scaleY(0).scaleX(0).setListener(new VpaListenerAdapter() {
+        @Override
+        public void onAnimationStart(View view) {
+            dispatchRemoveStarting(holder);
+        }
+
+        @Override
+        public void onAnimationEnd(View view) {
+            animation.setListener(null);
+            ViewCompat.setAlpha(view, 1);
+            ViewCompat.setScaleY(view, 1);
+            ViewCompat.setScaleX(view, 1);
+            dispatchRemoveFinished(holder);
+            mRemoveAnimations.remove(holder);
+            dispatchFinishedWhenDone();
+        }
+    }).start();
+}
+</code></pre><h2 id="animateAddImpl-1"><a href="#animateAddImpl-1" class="headerlink" title="animateAddImpl()"></a>animateAddImpl()</h2><p>期望效果：从透明变为可见，并从小拉伸到正常大小<br>其实就是跟remove反过来了而已，来看看代码：</p>
+<pre><code>void animateAddImpl(final RecyclerView.ViewHolder holder) {
+        final View view = holder.itemView;
+        final ViewPropertyAnimatorCompat animation = ViewCompat.animate(view);
+        mAddAnimations.add(holder);
+        animation.alpha(1).scaleX(1).scaleY(1).setDuration(getAddDuration()).
+                setListener(new VpaListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(View view) {
+                        dispatchAddStarting(holder);
+                    }
+
+                @Override
+                public void onAnimationCancel(View view) {
+                    ViewCompat.setScaleX(view, 1);
+                    ViewCompat.setScaleY(view, 1);
+                    ViewCompat.setAlpha(view, 1);
+                }
+
+                @Override
+                public void onAnimationEnd(View view) {
+                    animation.setListener(null);
+                    dispatchAddFinished(holder);
+                    mAddAnimations.remove(holder);
+                    dispatchFinishedWhenDone();
+                }
+            }).start();
+}
+</code></pre><p>来看看效果：</p>
+<p><img src="/images/rv3Add1.gif" alt=""></p>
+<p>添加Item的动画跟想象的不一样啊！回头看看animateAdd()：</p>
+<pre><code>@Override
+public boolean animateAdd(final RecyclerView.ViewHolder holder) {
+    resetAnimation(holder);
+    ViewCompat.setAlpha(holder.itemView, 0);
+    mPendingAdditions.add(holder);
+    return true;
+}
+</code></pre><p>这里还开始动画时只设置了alpha为透明，并没有把item缩小，那么改一下：</p>
+<pre><code>@Override
+public boolean animateAdd(final RecyclerView.ViewHolder holder) {
+    resetAnimation(holder);
+    ViewCompat.setAlpha(holder.itemView, 0);
+    ViewCompat.setScaleX(holder.itemView, 0);
+    ViewCompat.setScaleY(holder.itemView, 0);
+    mPendingAdditions.add(holder);
+    return true;
+}
+</code></pre><p>再来看看效果：</p>
+<p><img src="/images/rv3Add2.gif" alt=""></p>
+<p>这下对了，快速连续点几下试试看呢：<br>为啥前几个item都是透明的啊！刷新看看，又正常显示了！咋回事，想想最开始说的animateAdd()，我们在添加动画之前，先重置了动画，也就是resetAnimation()，点进去找到endAnimation()，看看添加相关的代码块：</p>
+<pre><code>for (int i = mAdditionsList.size() - 1; i &gt;= 0; i--) {
+            ArrayList&lt;RecyclerView.ViewHolder&gt; additions = mAdditionsList.get(i);
+            if (additions.remove(item)) {
+                ViewCompat.setAlpha(view, 1);
+                dispatchAddFinished(item);
+                if (additions.isEmpty()) {
+                    mAdditionsList.remove(i);
+                }
+            }
+</code></pre><p>这下原因明了了，在我们快速点击添加时，会先执行这里面的代码，而这里只设置了alpha值，修改一下：</p>
+<pre><code>for (int i = mAdditionsList.size() - 1; i &gt;= 0; i--) {
+            ArrayList&lt;RecyclerView.ViewHolder&gt; additions = mAdditionsList.get(i);
+            if (additions.remove(item)) {
+                ViewCompat.setAlpha(view, 1);
+                ViewCompat.setScaleY(view,1);
+                ViewCompat.setScaleX(view,1);
+                dispatchAddFinished(item);
+                if (additions.isEmpty()) {
+                    mAdditionsList.remove(i);
+                }
+            }
+</code></pre><p>再来看看效果：</p>
+<p><img src="/images/rv3Add3.gif" alt=""></p>
+<p>完美</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>只讲了添加删除的动画，move和change都没有改动，篇幅太长就不做演示了，有兴趣可以自己尝试一下，不过难度最大的还是move，change的动画，毕竟要计算坐标，相对添加删除来说要难一点点，虽然也差不了多少，本篇到此结束，文中如有错误的地方，还请指出，谢谢！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://raw.githubusercontent.com/rokudol/rokudol.github.io/master/images/weichat.jpg" alt="rokudol WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://raw.githubusercontent.com/rokudol/rokudol.github.io/master/images/alipay.jpg" alt="rokudol Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/自定义view---强大的密码输入框.html" rel="next" title="自定义view---强大的密码输入框">
+                <i class="fa fa-chevron-left"></i> 自定义view---强大的密码输入框
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/序列化基础知识.html" rel="prev" title="序列化基础知识">
+                序列化基础知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+ 
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/23734122?v=3&s=460"
+               alt="rokudol" />
+          <p class="site-author-name" itemprop="name">rokudol</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/rokudol" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2779837417" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/zxt0601" title="张旭童的CSDN" target="_blank">张旭童的CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/guolin_blog" title="郭林的CSDN" target="_blank">郭林的CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/lmj623565791/" title="鸿洋的CSDN" target="_blank">鸿洋的CSDN</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一部分"><span class="nav-number">1.</span> <span class="nav-text">第一部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法解读"><span class="nav-number">1.1.</span> <span class="nav-text">方法解读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量解读"><span class="nav-number">1.2.</span> <span class="nav-text">变量解读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isRunning"><span class="nav-number">1.3.</span> <span class="nav-text">isRunning()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#animateAdd"><span class="nav-number">1.4.</span> <span class="nav-text">animateAdd()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runPendingAnimations"><span class="nav-number">1.5.</span> <span class="nav-text">runPendingAnimations()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#animateAddImpl"><span class="nav-number">1.6.</span> <span class="nav-text">animateAddImpl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#animateMove"><span class="nav-number">1.7.</span> <span class="nav-text">animateMove()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二部分"><span class="nav-number">2.</span> <span class="nav-text">第二部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#animateRemoveImpl"><span class="nav-number">2.1.</span> <span class="nav-text">animateRemoveImpl()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#animateAddImpl-1"><span class="nav-number">2.2.</span> <span class="nav-text">animateAddImpl()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div style="max-width: 320px;max-height: 50px">
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=300 src="//music.163.com/outchain/player?type=0&id=738469784&auto=0&height=430"></iframe>
+  </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rokudol</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2141696"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

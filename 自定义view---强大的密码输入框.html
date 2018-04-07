@@ -1,0 +1,1489 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="自定义View" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="rokudol的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="我司之前有个需求，要求类似支付宝那样的密码支付，产品要求输入的当前字符需要是明文密码，1s后转换为圆点，原本想网上那么多密码输入框，肯定没问题，结果UI一出图就懵逼了，翻遍了各个角落，都找不到类似的密码输入框，没办法，自己写吧。使用方法，在gradle中添加：compile ‘com.rokudoll:PswText:1.0.0’即可使用当然绘制思路参照了其他大佬的思路，言归正传，先来看看效果图：">
+<meta name="keywords" content="自定义View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义view---强大的密码输入框">
+<meta property="og:url" content="http://blog.rokudol.cn/自定义view---强大的密码输入框.html">
+<meta property="og:site_name" content="rokudol的博客">
+<meta property="og:description" content="我司之前有个需求，要求类似支付宝那样的密码支付，产品要求输入的当前字符需要是明文密码，1s后转换为圆点，原本想网上那么多密码输入框，肯定没问题，结果UI一出图就懵逼了，翻遍了各个角落，都找不到类似的密码输入框，没办法，自己写吧。使用方法，在gradle中添加：compile ‘com.rokudoll:PswText:1.0.0’即可使用当然绘制思路参照了其他大佬的思路，言归正传，先来看看效果图：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.rokudol.cn/images/Renderings.png">
+<meta property="og:image" content="http://blog.rokudol.cn/images/pswTextDraft.png">
+<meta property="og:image" content="http://blog.rokudol.cn/images/pswTextEquation.png">
+<meta property="og:image" content="http://blog.rokudol.cn/images/pswTextonDraw.png">
+<meta property="og:image" content="http://blog.rokudol.cn/images/pswTextKeyCode.png">
+<meta property="og:image" content="http://blog.rokudol.cn/images/PswGif.gif">
+<meta property="og:updated_time" content="2018-04-07T02:37:46.200Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义view---强大的密码输入框">
+<meta name="twitter:description" content="我司之前有个需求，要求类似支付宝那样的密码支付，产品要求输入的当前字符需要是明文密码，1s后转换为圆点，原本想网上那么多密码输入框，肯定没问题，结果UI一出图就懵逼了，翻遍了各个角落，都找不到类似的密码输入框，没办法，自己写吧。使用方法，在gradle中添加：compile ‘com.rokudoll:PswText:1.0.0’即可使用当然绘制思路参照了其他大佬的思路，言归正传，先来看看效果图：">
+<meta name="twitter:image" content="http://blog.rokudol.cn/images/Renderings.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.rokudol.cn/自定义view---强大的密码输入框.html"/>
+
+
+
+
+
+  <title>自定义view---强大的密码输入框 | rokudol的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-99762574-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">rokudol的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.rokudol.cn/自定义view---强大的密码输入框.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="rokudol">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/23734122?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rokudol的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义view---强大的密码输入框</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-08T14:42:01+08:00">
+                2017-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/自定义View/" itemprop="url" rel="index">
+                    <span itemprop="name">自定义View</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我司之前有个需求，要求类似支付宝那样的密码支付，产品要求输入的当前字符需要是明文密码，1s后转换为圆点，原本想网上那么多密码输入框，肯定没问题，结果UI一出图就懵逼了，翻遍了各个角落，都找不到类似的密码输入框，没办法，自己写吧。<br>使用方法，在gradle中添加：compile ‘com.rokudoll:PswText:1.0.0’即可使用<br>当然绘制思路参照了其他大佬的思路，言归正传，先来看看效果图：<br><img src="/images/Renderings.png" alt=""><br><a id="more"></a></p>
+<h1 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h1><p>拿到效果图，再结合产品的要求，整理出以下要求：<br>1、类似EditText的password模式，输入密码时，输入的当前密码为明文，而之前的密码变为圆点，1s后当前密码也变为圆点<br>2、整体密码框为一个颜色，而已输入或当前输入密码位置的密码框为另一个颜色<br>3、有阴影</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>自定义view的流程就不再赘述了，不太清楚的可以去看看鸿洋和郭林的教程，先写好自定义属性，按照之前分析的结果以及自己的一点想法，为了更方便的使用，就有了以下的自定义属性，目前没有使用枚举，全部都是以boolean值来规定使用哪种模式，不过之后会换成枚举，那么先来看看有哪些自定义属性：</p>
+<h2 id="attrs"><a href="#attrs" class="headerlink" title="attrs"></a>attrs</h2><table>
+<thead>
+<tr>
+<th>属性名</th>
+<th style="text-align:right">值</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pswLength</td>
+<td style="text-align:right">integer</td>
+<td style="text-align:center">规定密码长度，默认为6</td>
+</tr>
+<tr>
+<td>delayTime</td>
+<td style="text-align:right">integer</td>
+<td style="text-align:center">延迟绘制密码圆点的时间 默认1000,1000=1s</td>
+</tr>
+<tr>
+<td>borderColor</td>
+<td style="text-align:right">color</td>
+<td style="text-align:center">初始化密码框颜色</td>
+</tr>
+<tr>
+<td>pswColor</td>
+<td style="text-align:right">color</td>
+<td style="text-align:center">密码颜色</td>
+</tr>
+<tr>
+<td>inputBorder_color</td>
+<td style="text-align:right">color</td>
+<td style="text-align:center">输入时密码框颜色</td>
+</tr>
+<tr>
+<td>borderShadow_color</td>
+<td style="text-align:right">color</td>
+<td style="text-align:center">输入时密码框阴影颜色</td>
+</tr>
+<tr>
+<td>psw_textSize</td>
+<td style="text-align:right">sp</td>
+<td style="text-align:center">明文密码大小</td>
+</tr>
+<tr>
+<td>borderRadius</td>
+<td style="text-align:right">dp</td>
+<td style="text-align:center">不使用图片时，密码框圆角大小</td>
+</tr>
+<tr>
+<td>borderImg</td>
+<td style="text-align:right">drawable</td>
+<td style="text-align:center">密码框图片</td>
+</tr>
+<tr>
+<td>inputBorderImg</td>
+<td style="text-align:right">drawable</td>
+<td style="text-align:center">输入时变化的密码框图片</td>
+</tr>
+<tr>
+<td>isDrawBorderImg</td>
+<td style="text-align:right">boolean</td>
+<td style="text-align:center">是否使用图片绘制密码框，为true时设置borderImg、inputBorderImg才有效，默认为false</td>
+</tr>
+<tr>
+<td>isShowTextPsw</td>
+<td style="text-align:right">boolean</td>
+<td style="text-align:center">按下back键时是否需要绘制当前位置的明文密码，默认为false</td>
+</tr>
+<tr>
+<td>isShowBorderShadow</td>
+<td style="text-align:right">boolean</td>
+<td style="text-align:center">输入密码时是否需要绘制阴影,为true时设置borderShadow_color才有效，默认为false</td>
+</tr>
+<tr>
+<td>clearTextPsw</td>
+<td style="text-align:right">boolean</td>
+<td style="text-align:center">是否只绘制明文密码，默认为false</td>
+</tr>
+<tr>
+<td>darkPsw</td>
+<td style="text-align:right">boolean</td>
+<td style="text-align:center">是否只绘制圆点，默认为false</td>
+</tr>
+<tr>
+<td>isChangeBorder</td>
+<td style="text-align:right">boolean</td>
+<td style="text-align:center">是否在输入密码时不更改密码框颜色，默认为false</td>
+</tr>
+</tbody>
+</table>
+<p>设置好自定义属性后，就开始实现这个自定义控件了！首先肯定是计算宽高</p>
+<h2 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h2><p>作为一个数学很差的人，计算这个的过程确实是比较糟心的。。直接看图吧<br><img src="/images/pswTextDraft.png" alt=""><br>图中说明两处：<br>1、spacingWidth：为什么在宽度已知的情况下，spacingWidth = borderWidth / 4：<br>    很简单，因为用边框的宽度除以4得到的大小刚好是能让我接受的大小，且在pswLength = 7、8、9、10的时候，宽度也比较合适，说白了就是一点点凑出来的<br>2、borderWidth：为什么在宽度已知的情况下，borderWidth = (width <em> 4) / ((5 </em> pswLength) - 1)，<br>这个其实很好理解，当宽度已知的时候，borderWidth = width / 6 - spacingWidth，即宽度除以6减去一个间隙的宽度就等于一个边框的宽度，而间隙的宽度 = borderWidth /4，那么我们换算成一个方程式来看看，就一目了然了,如果这个方程式还看不懂，那就去请教一下初中数学老师吧。。<br><img src="/images/pswTextEquation.png" alt=""></p>
+<p>来看看完整代码：</p>
+<pre><code>@Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthSpec = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+
+        int heightSpec = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (widthSpec == MeasureSpec.AT_MOST) {
+            if (heightSpec != MeasureSpec.AT_MOST) {//高度已知但宽度未知时
+                spacingWidth = heightSize / 4;
+                widthSize = (heightSize * pswLength) + (spacingWidth * (pswLength - 1));
+                borderWidth = heightSize;
+            } else {//宽度，高度都未知时
+                widthSize = (borderWidth * pswLength) + (spacingWidth * (pswLength - 1));
+                heightSize = (int) (borderWidth + ((borderPaint.getStrokeWidth()) * 2));
+            }
+        } else {
+            //宽度已知但高度未知
+            if (heightSpec == MeasureSpec.AT_MOST) {
+                borderWidth = (widthSize * 4) / (5 * pswLength);
+                spacingWidth = borderWidth / 4;
+                heightSize = (int) (borderWidth + ((borderPaint.getStrokeWidth()) * 2));
+            }
+        }
+        setMeasuredDimension(widthSize, heightSize);
+    }
+</code></pre><p>解释一下为什么高度要加上borderPaint.getStrokeWidth()<em>2，很简单，如果直接取每个密码框的宽度作为高度的话，会出现密码框上下两根线绘制不完全的问题，因为画笔的宽度也是占了一定的大小的，所以我们在绘制高度时要留足够的高度来绘制整个view，为什么是</em>2呢？因为上下两根线。。当然要加两次，所以是乘以2</p>
+<p>按这种算法绘制出的view，其实右边还多了一个spacingWidth的宽度，因为我们给每一个边框都减去了一个spacingWidth的宽度，所以会多出一个spacingWidth的宽度，不过并不影响，我们可以在onDraw里把每一个密码框往右移0.5个spacingWidth的宽度，这样左右都空出了一小段空隙，视觉效果上也好看一点，直接来看看onDraw</p>
+<h2 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h2><h3 id="绘制pswLength数量个密码框"><a href="#绘制pswLength数量个密码框" class="headerlink" title="绘制pswLength数量个密码框"></a>绘制pswLength数量个密码框</h3><p>先说说思路，我们用for循环的方式，循环绘制出pswLength个密码框，用canvas.drawRoundRect绘制密码框，如果使用图片的话，就绘制图片，那么来看看canvas.drawRoundRect需要传递的参数:</p>
+<pre><code>drawRoundRect(RectF rect, float rx, float ry, Paint paint)
+</code></pre><p>rect：RectF对象，边框的具体坐标<br>rx,ry：圆角x,y轴的半径<br>paint：画笔<br>那我们先来计算边框的具体坐标，来看看草稿：<br><img src="/images/pswTextonDraw.png" alt=""><br>没错，这草稿就是这么low，数学差。。就是这么心酸，不过已经可以看出规律，前面说过，我们是用for循环的方式循环绘制出各个密码框，那么总结一下：<br>top =  0 + (borderPaint.getStrokeWidth())<br>bottom = height - (borderPaint.getStrokeWidth())<br>left = i <em> (borderWidth + spacingWidth)<br>right = borderWidth + i </em> (borderWidth + spacingWidth)<br>      = ((i + 1) <em> borderWidth) + (i </em> spacingWidth)</p>
+<p>为什么top加上了borderPaint.getStrokeWidth()，而bottom又减去了borderPaint.getStrokeWidth()？</p>
+<p>还记得我们在onMeasure处计算高度时，增加了borderPaint.getStrokeWidth()*2吗，我们的密码框在绘制时，为了把整个view往下移一个画笔宽度的位置，就需要在top出加上一个画笔宽度的大小。<br>而为什么bottom又要减去一个画笔宽度呢？仔细想想看，我们的bottom是用view的高度-一个画笔的宽度，而height是在边框的宽度基础上加上了两个画笔的宽度的，减去一个就正好是把整个view往下移了一个画笔的宽度</p>
+<p>但是这样绘制出来的密码框，就像前面提过的，右边会多出一个spacingWidth，所以我们left和right的坐标需要再改进一下:<br>int left = (int) ( (i <em> (borderWidth + spacingWidth)) + (0.5 </em> spacingWidth));<br>int right = (int) (((i + 1) <em> borderWidth) + (i </em> spacingWidth) + (0.5 * spacingWidth));<br>到这里并没有结束，为啥？因为说好的可以用图片来绘制边框，我们还没有实现这一步，不过也很简单，不需要重新计算坐标，直接贴该部分的完整代码：</p>
+<pre><code>private void drawBorder(Canvas canvas, int height) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), borderImg);
+        Rect src = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        for (int i = 0; i &lt; pswLength; i++) {
+            int left = (int) ( (i * (borderWidth + spacingWidth)) + (0.5 * spacingWidth));
+            int right = (int) (((i + 1) * borderWidth) + (i * spacingWidth) + (0.5 * spacingWidth));
+            if (isBorderImg) {
+                Rect dst = new Rect(left, 0, right, height);
+                canvas.drawBitmap(bitmap, src, dst, borderPaint);
+            } else {
+                borderRectF.set(left, 0, right, height);
+                canvas.drawRoundRect(borderRectF, borderRadius, borderRadius, borderPaint);
+            }
+        }
+        bitmap.recycle();
+
+    }
+</code></pre><h3 id="只绘制明文密码模式"><a href="#只绘制明文密码模式" class="headerlink" title="只绘制明文密码模式"></a>只绘制明文密码模式</h3><p>这个很简单，就不多做解释了</p>
+<pre><code>private void drawText(Canvas canvas, String num, int i) {
+    Rect mTextBound = new Rect();
+    pswTextPaint.getTextBounds(num, 0, num.length(), mTextBound);
+    Paint.FontMetrics fontMetrics = pswTextPaint.getFontMetrics();
+    float textX = (float) ((i * (borderWidth + spacingWidth)) + (borderWidth / 2 - mTextBound.width() / 2) + (0.5 * spacingWidth));
+    float textY = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top;
+    if (saveResult != 0 || saveResult &lt; result.size()) {
+        canvas.drawText(num, textX, textY, pswTextPaint);
+    }
+}
+</code></pre><p>说明一点，为什么在textX最后要加0.5*spacingWidth，因为我们绘制密码框的时候就多增加了这么多的宽度，所以绘制文字也要做同样的操作，同理，绘制圆点时也是一样，后面不多做赘述</p>
+<h3 id="只绘制圆点模式"><a href="#只绘制圆点模式" class="headerlink" title="只绘制圆点模式"></a>只绘制圆点模式</h3><pre><code>for (int i = 0; i &lt; result.size(); i++) {
+                float circleX = (float) ((i * (borderWidth + spacingWidth)) + (borderWidth / 2)  + (0.6 * spacingWidth));
+                float circleY = borderWidth / 2;
+                int left = (int) (i * (borderWidth + spacingWidth) + (0.5 * spacingWidth));
+                int right = (int) (((i + 1) * borderWidth) + (i * spacingWidth) + (0.5 * spacingWidth));
+                drawBitmapOrBorder(canvas, left, right, height);
+                canvas.drawCircle(circleX, circleY, dotRadius, pswDotPaint);
+            }
+</code></pre><h3 id="绘制输入密码时密码框变换样式："><a href="#绘制输入密码时密码框变换样式：" class="headerlink" title="绘制输入密码时密码框变换样式："></a>绘制输入密码时密码框变换样式：</h3><pre><code>private void drawBitmapOrBorder(Canvas canvas, int left, int right, int height) {
+    if (isBorderImg) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), inputBorderImg);
+        Rect src = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        Rect dst = new Rect(left, 0, right, height);
+        canvas.drawBitmap(bitmap, src, dst, inputBorderPaint);
+        bitmap.recycle();
+    } else {
+        borderRectF.set(left, 0, right, height);
+        canvas.drawRoundRect(borderRectF, borderRadius, borderRadius, inputBorderPaint);
+    }
+}
+</code></pre><h3 id="输入密码时，输入的当前密码为明文，1s后变为圆点模式，即默认模式"><a href="#输入密码时，输入的当前密码为明文，1s后变为圆点模式，即默认模式" class="headerlink" title="输入密码时，输入的当前密码为明文，1s后变为圆点模式，即默认模式"></a>输入密码时，输入的当前密码为明文，1s后变为圆点模式，即默认模式</h3><pre><code>if (invalidated) {
+                drawDelayCircle(canvas, height, dotRadius);
+                return;
+            }
+            for (int i = 0; i &lt; result.size(); i++) {
+                //密码明文
+                String num = result.get(i) + &quot;&quot;;
+                //圆点坐标
+                float circleX = (float) (((i - 1) * (borderWidth + spacingWidth)) + (borderWidth / 2) + (0.6 * spacingWidth));
+                float circleY = borderWidth / 2;
+                //密码框坐标
+                int left = (int) (i * (borderWidth + spacingWidth) + (0.5 * spacingWidth));
+                int right = (int) (((i + 1) * borderWidth) + (i * spacingWidth) + (0.5 * spacingWidth));
+
+            drawBitmapOrBorder(canvas, left, right, height);
+
+            drawText(canvas, num, i);
+
+            //当输入位置 = 输入的长度时，即判断当前绘制的位置是否为当前密码位置，若是则延迟1s后绘制圆点
+            if (i + 1 == result.size()) {
+                handler.sendEmptyMessageDelayed(1, delayTime);
+            }
+            //若按下back键保存的密码 &gt; 输入的密码长度，则只绘制圆点
+            //即按下back键时，不绘制明文密码
+            if (!isShowTextPsw) {
+                if (saveResult &gt; result.size()) {
+                    canvas.drawCircle((float) ((i * (borderWidth + spacingWidth)) + (borderWidth / 2 + (0.5 * spacingWidth))), circleY, dotRadius, pswDotPaint);
+                }
+            }
+            //当输入第二个密码时，才开始绘制圆点
+            if (i &gt;= 1) {
+                canvas.drawCircle(circleX, circleY, dotRadius, pswDotPaint);
+            }
+        }
+    }
+</code></pre><p>可能有同学注意到，这里我们计算的圆点坐标跟之前计算的不一样，为什么呢？因为在这里，我们计算的圆点坐标分为两种情况：<br>1、输入密码时，已输入的密码变为圆点，那么我们的圆点坐标就应该是用(i - 1)的方式去计算，这样才能实现输入到第二个密码时，第一个密码变为圆点<br>2、输入密码时，延迟1s后当前明文密码变为圆点，那么圆点坐标就应该是(i + 1)的方式计算</p>
+<h3 id="延迟绘制圆点"><a href="#延迟绘制圆点" class="headerlink" title="延迟绘制圆点"></a>延迟绘制圆点</h3><pre><code>private void drawDelayCircle(Canvas canvas, int height, int dotRadius) {
+    invalidated = false;
+    for (int i = 0; i &lt; result.size(); i++) {
+        float circleX = (float) (((i - 1) * (borderWidth + spacingWidth)) + (borderWidth / 2) + (0.6 * spacingWidth));
+        float circleY = borderWidth / 2;
+        int left = (int) (i * (borderWidth + spacingWidth) + (0.5 * spacingWidth));
+        int right = (int) (((i + 1) * borderWidth) + (i * spacingWidth) + (0.5 * spacingWidth));
+        canvas.drawCircle(circleX, circleY, dotRadius, pswDotPaint);
+        drawBitmapOrBorder(canvas, left, right, height);
+    }
+    canvas.drawCircle((float) ((float) (((result.size() - 1) * (borderWidth + spacingWidth)) + (borderWidth / 2)) + (0.5 * spacingWidth)),
+            borderWidth / 2, dotRadius, pswDotPaint);
+    handler.removeMessages(1);
+}
+</code></pre><p>以上就是全部的绘制逻辑，计算坐标这类似乎没什么好解释的，接下来就是自定义键盘，界面不需要我们自己再重新设计，用系统的就好，来看看代码</p>
+<h3 id="键盘"><a href="#键盘" class="headerlink" title="键盘"></a>键盘</h3><pre><code>class NumKeyListener implements OnKeyListener {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (event.isShiftPressed()) {//处理*#等键
+                    return false;
+                }
+                if (keyCode &gt;= KeyEvent.KEYCODE_0 &amp;&amp; keyCode &lt;= KeyEvent.KEYCODE_9) {//只处理数字
+                    if (result.size() &lt; pswLength) {
+                        result.add(keyCode - 7);
+                        invalidate();
+                        ensureFinishInput();
+                    }
+                    return true;
+                }
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    if (!result.isEmpty()) {//不为空，删除最后一个
+                        saveResult = result.size();
+                        result.remove(result.size() - 1);
+                        invalidate();
+                    }
+                    return true;
+                }
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    ensureFinishInput();
+                    return true;
+                }
+            }
+            return false;
+        }
+</code></pre><p>说明一下只处理数字那部分，为什么是keyCode - 7，我们点进源码看看<br><img src="/images/pswTextKeyCode.png" alt=""><br>可以看出，我们用keyCode - 7就刚好等于输入的数字<br>最终效果：<br><img src="/images/PswGif.gif" alt=""></p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>以上就是该自定义view的全部说明，并未贴出全部的完整代码，如有需要可到<a href="https://github.com/rokudol/PswText.git" target="_blank" rel="noopener">GitHub</a>查看完整源码，如果喜欢或觉得该控件对你有帮助还请点个star，文中如有错误还请指出，谢谢</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://raw.githubusercontent.com/rokudol/rokudol.github.io/master/images/weichat.jpg" alt="rokudol WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://raw.githubusercontent.com/rokudol/rokudol.github.io/master/images/alipay.jpg" alt="rokudol Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/RecyclerView的基本使用与进阶（二）.html" rel="next" title="RecyclerView的基本使用与进阶（二）">
+                <i class="fa fa-chevron-left"></i> RecyclerView的基本使用与进阶（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/RecyclerView的基本使用与进阶（三）md.html" rel="prev" title="RecyclerView的基本使用与进阶（三）">
+                RecyclerView的基本使用与进阶（三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+ 
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/23734122?v=3&s=460"
+               alt="rokudol" />
+          <p class="site-author-name" itemprop="name">rokudol</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/rokudol" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2779837417" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/zxt0601" title="张旭童的CSDN" target="_blank">张旭童的CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/guolin_blog" title="郭林的CSDN" target="_blank">郭林的CSDN</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.csdn.net/lmj623565791/" title="鸿洋的CSDN" target="_blank">鸿洋的CSDN</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求分析"><span class="nav-number">1.</span> <span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#attrs"><span class="nav-number">2.1.</span> <span class="nav-text">attrs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onMeasure"><span class="nav-number">2.2.</span> <span class="nav-text">onMeasure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onDraw"><span class="nav-number">2.3.</span> <span class="nav-text">onDraw</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制pswLength数量个密码框"><span class="nav-number">2.3.1.</span> <span class="nav-text">绘制pswLength数量个密码框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只绘制明文密码模式"><span class="nav-number">2.3.2.</span> <span class="nav-text">只绘制明文密码模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只绘制圆点模式"><span class="nav-number">2.3.3.</span> <span class="nav-text">只绘制圆点模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制输入密码时密码框变换样式："><span class="nav-number">2.3.4.</span> <span class="nav-text">绘制输入密码时密码框变换样式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入密码时，输入的当前密码为明文，1s后变为圆点模式，即默认模式"><span class="nav-number">2.3.5.</span> <span class="nav-text">输入密码时，输入的当前密码为明文，1s后变为圆点模式，即默认模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延迟绘制圆点"><span class="nav-number">2.3.6.</span> <span class="nav-text">延迟绘制圆点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#键盘"><span class="nav-number">2.3.7.</span> <span class="nav-text">键盘</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">3.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+    <div style="max-width: 320px;max-height: 50px">
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=300 src="//music.163.com/outchain/player?type=0&id=738469784&auto=0&height=430"></iframe>
+  </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rokudol</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2141696"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
