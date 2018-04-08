@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://blog.rokudol.cn/%E8%87%AA%E5%AE%9A%E4%B9%89view---%E5%88%A9%E7%94%A8%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%88%B6%E7%9A%84%E6%9B%B2%E7%BA%BF%E5%9B%BE.html</loc>
-    <lastmod>2018-04-08T02:40:02.555Z</lastmod>
+    <lastmod>2018-04-08T02:43:07.345Z</lastmod>
     <data>
         <display>
         <title>自定义view---利用贝塞尔曲线绘制的曲线图</title>
@@ -88,12 +88,12 @@
     
     
   <url>
-    <loc>http://blog.rokudol.cn/DialogFragment%E4%B8%8EFragment%E4%B9%8B%E9%97%B4%E4%BA%92%E7%9B%B8%E4%BC%A0%E5%80%BC.html</loc>
+    <loc>http://blog.rokudol.cn/MVP+Retrofit+RxJava+ButterKnife%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html</loc>
     <lastmod>2018-04-07T02:37:46.199Z</lastmod>
     <data>
         <display>
-        <title>DialogFragment与Fragment之间互相传值</title>
-        <pubTime>2017-05-20T11:08:45.000Z</pubTime>
+        <title>MVP+Retrofit+RxJava+ButterKnife的简单使用</title>
+        <pubTime>2017-05-20T01:17:39.000Z</pubTime>
         
         <tag>Android</tag>
          
@@ -148,12 +148,12 @@
 
     
   <url>
-    <loc>http://blog.rokudol.cn/MVP+Retrofit+RxJava+ButterKnife%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html</loc>
+    <loc>http://blog.rokudol.cn/DialogFragment%E4%B8%8EFragment%E4%B9%8B%E9%97%B4%E4%BA%92%E7%9B%B8%E4%BC%A0%E5%80%BC.html</loc>
     <lastmod>2018-04-07T02:37:46.199Z</lastmod>
     <data>
         <display>
-        <title>MVP+Retrofit+RxJava+ButterKnife的简单使用</title>
-        <pubTime>2017-05-20T01:17:39.000Z</pubTime>
+        <title>DialogFragment与Fragment之间互相传值</title>
+        <pubTime>2017-05-20T11:08:45.000Z</pubTime>
         
         <tag>Android</tag>
          
