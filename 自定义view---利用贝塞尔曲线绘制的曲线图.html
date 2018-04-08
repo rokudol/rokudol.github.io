@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="总结" />
+  <meta name="keywords" content="自定义view" />
 
 
 
@@ -92,18 +92,23 @@
 
 
 
-<meta name="description" content="年终总结一年又过去了，今年学到了不少东西，也结交到几个大佬，很开心，又是充实（荒废）的一年。 今年年初的时候，给自己定了一个小目标：  GitHub达到200start 坚持学习 写至少10篇博客  照目前的形式来看，除了坚持学习以外，其他的是已经凉了。。。 不过年目标不就是为了拿来凉的吗哈哈哈哈哈哈 虽然年目标凉了，但是也收获到不少东西。">
-<meta name="keywords" content="总结">
+<meta name="description" content="直接来看看效果图吧 需求分析从效果图上，我们可以得出以下结论  与传统的曲线图不同，x，y轴比较另类，x轴是下方的“地区一”，“地区二”，y轴可以把上方的具体数字看做y轴，即“82.66“，”88.86“这些数字 曲线覆盖的下方，有渐变色，颜色从曲线画笔颜色到完全透明 有点击效果以及滑动效果 选中某个点后，弹出浮窗，浮窗有阴影  曲线的绘制方法有两种：  利用贝塞尔曲线绘制 使用CornerPat">
+<meta name="keywords" content="自定义view">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2017年终总结以及新年计划">
-<meta property="og:url" content="http://blog.rokudol.cn/2017年终总结以及新年计划.html">
+<meta property="og:title" content="自定义view---利用贝塞尔曲线绘制的曲线图">
+<meta property="og:url" content="http://blog.rokudol.cn/自定义view---利用贝塞尔曲线绘制的曲线图.html">
 <meta property="og:site_name" content="rokudol的博客">
-<meta property="og:description" content="年终总结一年又过去了，今年学到了不少东西，也结交到几个大佬，很开心，又是充实（荒废）的一年。 今年年初的时候，给自己定了一个小目标：  GitHub达到200start 坚持学习 写至少10篇博客  照目前的形式来看，除了坚持学习以外，其他的是已经凉了。。。 不过年目标不就是为了拿来凉的吗哈哈哈哈哈哈 虽然年目标凉了，但是也收获到不少东西。">
+<meta property="og:description" content="直接来看看效果图吧 需求分析从效果图上，我们可以得出以下结论  与传统的曲线图不同，x，y轴比较另类，x轴是下方的“地区一”，“地区二”，y轴可以把上方的具体数字看做y轴，即“82.66“，”88.86“这些数字 曲线覆盖的下方，有渐变色，颜色从曲线画笔颜色到完全透明 有点击效果以及滑动效果 选中某个点后，弹出浮窗，浮窗有阴影  曲线的绘制方法有两种：  利用贝塞尔曲线绘制 使用CornerPat">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-07T02:37:46.199Z">
+<meta property="og:image" content="http://blog.rokudol.cn/images/curveChartEffectImg.png">
+<meta property="og:image" content="http://blog.rokudol.cn/images/Bezier_1.png">
+<meta property="og:image" content="http://blog.rokudol.cn/images/Bezier_2.png">
+<meta property="og:image" content="http://blog.rokudol.cn/images/curveChartViewImg.png">
+<meta property="og:updated_time" content="2018-04-08T02:40:02.555Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2017年终总结以及新年计划">
-<meta name="twitter:description" content="年终总结一年又过去了，今年学到了不少东西，也结交到几个大佬，很开心，又是充实（荒废）的一年。 今年年初的时候，给自己定了一个小目标：  GitHub达到200start 坚持学习 写至少10篇博客  照目前的形式来看，除了坚持学习以外，其他的是已经凉了。。。 不过年目标不就是为了拿来凉的吗哈哈哈哈哈哈 虽然年目标凉了，但是也收获到不少东西。">
+<meta name="twitter:title" content="自定义view---利用贝塞尔曲线绘制的曲线图">
+<meta name="twitter:description" content="直接来看看效果图吧 需求分析从效果图上，我们可以得出以下结论  与传统的曲线图不同，x，y轴比较另类，x轴是下方的“地区一”，“地区二”，y轴可以把上方的具体数字看做y轴，即“82.66“，”88.86“这些数字 曲线覆盖的下方，有渐变色，颜色从曲线画笔颜色到完全透明 有点击效果以及滑动效果 选中某个点后，弹出浮窗，浮窗有阴影  曲线的绘制方法有两种：  利用贝塞尔曲线绘制 使用CornerPat">
+<meta name="twitter:image" content="http://blog.rokudol.cn/images/curveChartEffectImg.png">
 
 
 
@@ -131,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.rokudol.cn/2017年终总结以及新年计划.html"/>
+  <link rel="canonical" href="http://blog.rokudol.cn/自定义view---利用贝塞尔曲线绘制的曲线图.html"/>
 
 
 
 
 
-  <title>2017年终总结以及新年计划 | rokudol的博客</title>
+  <title>自定义view---利用贝塞尔曲线绘制的曲线图 | rokudol的博客</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -310,7 +315,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.rokudol.cn/2017年终总结以及新年计划.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.rokudol.cn/自定义view---利用贝塞尔曲线绘制的曲线图.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="rokudol">
@@ -327,7 +332,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2017年终总结以及新年计划</h1>
+          <h1 class="post-title" itemprop="name headline">自定义view---利用贝塞尔曲线绘制的曲线图</h1>
         
 
         <div class="post-meta">
@@ -339,8 +344,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-31T20:12:42+08:00">
-                2017-12-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-07T10:12:42+08:00">
+                2018-04-07
               </time>
             
 
@@ -362,8 +367,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/总结/" itemprop="url" rel="index">
-                    <span itemprop="name">总结</span>
+                  <a href="/categories/自定义view/" itemprop="url" rel="index">
+                    <span itemprop="name">自定义view</span>
                   </a>
                 </span>
 
@@ -401,36 +406,471 @@
       
 
       
-        <h1 id="年终总结"><a href="#年终总结" class="headerlink" title="年终总结"></a>年终总结</h1><p>一年又过去了，今年学到了不少东西，也结交到几个大佬，很开心，又是充实（荒废）的一年。</p>
-<p>今年年初的时候，给自己定了一个小目标：</p>
-<ul>
-<li>GitHub达到200start</li>
-<li>坚持学习</li>
-<li>写至少10篇博客</li>
-</ul>
-<p>照目前的形式来看，除了坚持学习以外，其他的是已经凉了。。。</p>
-<p>不过年目标不就是为了拿来凉的吗哈哈哈哈哈哈</p>
-<p>虽然年目标凉了，但是也收获到不少东西。</p>
-<a id="more"></a>
-<h2 id="学习上"><a href="#学习上" class="headerlink" title="学习上"></a>学习上</h2><p>今年也学到不少东西，Android上学习了RecyclerView、自定义view、kotlin、组件化、学习了oss开源项目，从中收获颇丰：编程思想、代码规范、RxJava、单元测试，希望自己能在新的一年也能写出像oss这样的代码</p>
-<p>当然也学习了不少杂七杂八的东西，比如：利用GitPage搭建hexo博客、利用VPS自建梯子、Linux、简单的算法，从源码层面上，对HashMap的理解更深刻了。</p>
-<p>在此感谢Rank和浮舟两位大佬，耐心的为我讲解我提出的各种奇葩的问题，两位大佬被我气得半死，但仍没有怼我，我真的十分感激，也希望自己在技术上能更上一层楼。虽然两位大佬都不知道我博客的地址，不过依旧不能阻止我这颗感恩的心，哈哈哈。</p>
-<h2 id="工作上"><a href="#工作上" class="headerlink" title="工作上"></a>工作上</h2><p>在今年年中的时候，进入了目前这家公司，虽然技术氛围稍差了些，不过同事都非常友好，有问题都能互相帮助，总监和主管也没有架子，工作交流一点也不压抑。</p>
-<p>进入公司到现在半年的时间里，参与了公司一个新项目的开发，两个核心项目的数次迭代（敏捷开发伤不起啊），在公司给同事们分享了kotlin，给Android小组分享了组件化的优势，在公司也学到不少东西，也提升了自己的表达能力，还是比较满足。</p>
-<p>跟同事分享了kotlin之后，与一个后端同事达成共识，使用kotlin完成一个APP，不过刚开始写没多久，公司业务就开始忙起来了，到后面基本上闲置了。。只完成了两个页面。。。惭愧</p>
-<h1 id="年计划"><a href="#年计划" class="headerlink" title="年计划"></a>年计划</h1><ul>
-<li>家里还堆了八本书，今年必须要看完了</li>
-<li>为了明年去深圳做准备，也得把剩下的几科专升本的考试考了，给自己增加部分竞争力吧</li>
-<li>学习也是万万不可放下的</li>
-<li>至少每月写一篇博客</li>
-<li>每天都学习一点算法</li>
-<li>研习oss，学习其中的思想，让自己也写出这样漂亮的代码</li>
-<li>GitHub上有300star吧</li>
-<li>学习Linux</li>
-<li>学习kotlin</li>
-</ul>
-<p>基本上就这些了，今年要做的事情很多，尤其是升本，时间紧任务重。</p>
-<p>那么新的一年也请大家多多指教</p>
+        <p>直接来看看效果图吧<br><img src="/images/curveChartEffectImg.png" alt=""></p>
+<h1 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h1><p>从效果图上，我们可以得出以下结论</p>
+<ol>
+<li>与传统的曲线图不同，x，y轴比较另类，x轴是下方的“地区一”，“地区二”，y轴可以把上方的具体数字看做y轴，即“82.66“，”88.86“这些数字</li>
+<li>曲线覆盖的下方，有渐变色，颜色从曲线画笔颜色到完全透明</li>
+<li>有点击效果以及滑动效果</li>
+<li>选中某个点后，弹出浮窗，浮窗有阴影</li>
+</ol>
+<p>曲线的绘制方法有两种：</p>
+<ol>
+<li>利用贝塞尔曲线绘制</li>
+<li>使用CornerPathEffect绘制<br>CornerPathEffect可以将各个连接线之间的夹角用更平滑的方式连接，具体用法本篇文章不做叙述，毕竟我选择用贝塞尔曲线，理由很简单，自己计算控制点，可以做出更多的效果，从效果图可以看出，该曲线图用二阶贝塞尔即可完成</li>
+</ol>
+<p>那么，先根据效果图来制定下自定义属性</p>
+<h1 id="自定义属性"><a href="#自定义属性" class="headerlink" title="自定义属性"></a>自定义属性</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">属性名</th>
+<th style="text-align:center">值</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">titleText</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">title的文字</td>
+</tr>
+<tr>
+<td style="text-align:center">titleBgColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">title栏的背景颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">titleTextColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">title文字的颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">titleTextSize</td>
+<td style="text-align:center">sp</td>
+<td style="text-align:center">title文字大小</td>
+</tr>
+<tr>
+<td style="text-align:center">chartBgColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">图表的背景颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">xCoordinateBgColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">x轴背景颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">lineColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">y轴线的颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">textDefaultColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">x轴与y轴为选中时的默认颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">textSelectedColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">x轴与y轴被选中时的颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">xCoordinateTextSize</td>
+<td style="text-align:center">sp</td>
+<td style="text-align:center">x轴的文字大小</td>
+</tr>
+<tr>
+<td style="text-align:center">yCoordinateTextSize</td>
+<td style="text-align:center">sp</td>
+<td style="text-align:center">y轴的文字大小</td>
+</tr>
+<tr>
+<td style="text-align:center">curveColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">曲线颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">chartPointDefaultStyle</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">曲线表中点的默认样式</td>
+</tr>
+<tr>
+<td style="text-align:center">chartPointSelectedStyle</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">曲线表中点被选中的样式</td>
+</tr>
+<tr>
+<td style="text-align:center">xCoordinateSpacing</td>
+<td style="text-align:center">dp</td>
+<td style="text-align:center">x轴坐标间的距离</td>
+</tr>
+<tr>
+<td style="text-align:center">chartMinimumColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">图表渐变色中最浅的颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">floatBoxBgColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">浮窗的背景颜色</td>
+</tr>
+</tbody>
+</table>
+<p>制定好自定义属性后，接下来就需要正式开始撸代码实现效果了</p>
+<h1 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h1><h2 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h2><p>一般来说，图表view的宽度始终都是充满整个屏幕的，根据效果图，高度并没有充满屏幕，那么在onMeasure中，我们只需要关心view的高度在wrap模式下，该如何展示，我用了一个比较简单粗暴的方法：</p>
+<p>如果高度是wrap模式，那么设定高度为350dp</p>
+<pre><code>@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+
+    int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+    int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+    //宽度始终为match，只考虑高为自适应的情况
+    if (heightMode == MeasureSpec.AT_MOST) {
+        heightSize = dip2px(350);
+    }
+    height = heightSize;
+    setMeasuredDimension(widthSize, height);
+
+    x = firstSpacing;
+
+    //减去0.1f是因为最后一个X周刻度距离右边的长度为X轴可见长度的10%
+    minX = getWidth() - (getWidth() * 0.1f) - xCoordinateSpacing * (xCoordinateData.size() - 1);
+    maxX = x;
+}
+</code></pre><h2 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h2><p>在开始写onDraw方法前，我们先制定一些小目标：</p>
+<ol>
+<li>绘制title</li>
+<li>绘制x轴</li>
+<li>绘制y轴</li>
+<li>绘制图表</li>
+<li>绘制数据点</li>
+<li>绘制曲线及渐变色</li>
+<li>绘制浮窗</li>
+</ol>
+<h3 id="绘制title"><a href="#绘制title" class="headerlink" title="绘制title"></a>绘制title</h3><p>首先，我们要计算title的高度，根据效果图的标注，我们将title部分的高度设置为view高度的1/8</p>
+<pre><code>    //绘制title
+private void drawTitle(Canvas canvas) {
+    bgColorPaint.setColor(titleBgColor);
+    int titleBottom = height / 8;
+    canvas.drawRect(0, 0, getWidth(), titleBottom, bgColorPaint);
+
+    Rect mTextBound = new Rect();
+    titlePaint.getTextBounds(titleText, 0, titleText.length(), mTextBound);
+    Paint.FontMetrics fontMetrics = titlePaint.getFontMetrics();
+    float textX = getWidth() / 2 - mTextBound.width() / 2;
+    float textY = (titleBottom - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top;
+    canvas.drawText(titleText, textX, textY, titlePaint);
+
+}
+</code></pre><h3 id="绘制x轴"><a href="#绘制x轴" class="headerlink" title="绘制x轴"></a>绘制x轴</h3><p>同样的，x轴部分的高度也为view的1/8，x轴第一个值与原点之间的距离我们设置为x轴坐标间距离的1/3，也就是<code>xCoordinateSpacing / 3;</code></p>
+<p>再根据我们之前的需求分析，该view是有点击效果的，那么我们声明一个boolean类型的变量来判断该点是否被选中</p>
+<pre><code>    //绘制x轴
+private void drawXCoordinate(Canvas canvas) {
+    int xCoordinateHeight = height - (height / 8);
+    bgColorPaint.setColor(xCoordinateBgColor);
+    coordinateTextPaint.setTextSize(xCoordinateTextSize);
+    //先绘制背景颜色
+    canvas.drawRect(0, xCoordinateHeight, getWidth(), height, bgColorPaint);
+
+
+    for (int i = 0; i &lt; xCoordinateData.size(); i++) {
+        float textX = (xCoordinateSpacing / 3) + xCoordinateSpacing * i;
+        float textY = (height - (height / 8)) + ((height - xCoordinateHeight) / 2);
+
+        if (i == selectedIndex) {
+            coordinateTextPaint.setColor(textSelectedColor);
+        } else {
+            coordinateTextPaint.setColor(textDefaultColor);
+        }
+        canvas.drawText(xCoordinateData.get(i), textX, textY, coordinateTextPaint);
+    }
+
+}
+</code></pre><h3 id="绘制y轴"><a href="#绘制y轴" class="headerlink" title="绘制y轴"></a>绘制y轴</h3><p>y轴绘制步骤与x轴一致</p>
+<pre><code>    //绘制y轴
+private void drawYCoordinate(Canvas canvas) {
+    coordinateTextPaint.setTextSize(yCoordinateTextSize);
+
+    for (int i = 0; i &lt; yCoordinateData.size(); i++) {
+        String text = yCoordinateData.get(i) + &quot;&quot;;
+        float textX = (xCoordinateSpacing / 3) + xCoordinateSpacing * i;
+        float textY = (height / 9) + (height / 8);
+
+        if (i == selectedIndex) {
+            coordinateTextPaint.setColor(textSelectedColor);
+        } else {
+            coordinateTextPaint.setColor(textDefaultColor);
+        }
+        canvas.drawText(text, textX, textY, coordinateTextPaint);
+    }
+}
+</code></pre><h3 id="绘制图表"><a href="#绘制图表" class="headerlink" title="绘制图表"></a>绘制图表</h3><pre><code>//绘制图表
+private void drawChart(Canvas canvas) {
+    bgColorPaint.setColor(chartBgColor);
+    int chartTop = height / 8;
+
+    pointPaint.setColor(Color.BLUE);
+
+    bgColorPaint.setColor(chartBgColor);
+
+    //先绘制图表背景颜色
+    canvas.drawRect(0, chartTop, getWidth(), height - chartTop, bgColorPaint);
+
+    bgColorPaint.setColor(lineColor);
+    for (int i = 0; i &lt; yCoordinateData.size(); i++) {
+        //绘制坐标线
+        float lineX = (xCoordinateSpacing / 3) + (xCoordinateSpacing * i);
+        canvas.drawLine(lineX, height / 8, lineX, height - chartTop, bgColorPaint);
+    }
+}
+</code></pre><h3 id="绘制数据点"><a href="#绘制数据点" class="headerlink" title="绘制数据点"></a>绘制数据点</h3><p>在绘制数据点前，我们要知道原点在哪儿，根据效果图，原点的x坐标在屏幕的最左侧，也就是0，y坐标在x坐标部分的顶部，也就是<code>height - (height / 8);</code>而数据点的x坐标，就是x轴的坐标加上x轴文字宽度的一半</p>
+<pre><code>private void drawPoint(Canvas canvas) {
+        yOri = height - (height / 8);
+    for(int i = 0; i &lt; yCoordinateData.size(); i++) {
+
+        int x = (int) (this.x + this.xCoordinateSpacing * i + (getTextWidth(i) / 2));
+        int y = (int) (yOri - (((yOri * (1 - 0.5f)) * yCoordinateData.get(i)) / Collections.max(yCoordinateData)));
+        canvas.drawCircle(x, y, 25, pointPaint);
+
+        }
+    }
+</code></pre><h3 id="绘制曲线"><a href="#绘制曲线" class="headerlink" title="绘制曲线"></a>绘制曲线</h3><p>前面提到，我们用贝塞尔曲线来完成曲线图中曲线的绘制，那么，我们先计算贝塞尔曲线中的控制点</p>
+<p><img src="/images/Bezier_1.png" alt=""><br><img src="/images/Bezier_2.png" alt=""></p>
+<p>先根据相邻点（P1，P2, P3）计算出相邻点的中点(P4， P5)，然后再计算相邻中点的中点(P6)。然后将（P4，P6, P5）组成的线段平移到经过P2的直线（P8，P2，P7）上。接着根据（P4，P6，P5，P2）的坐标计算出(P7，P8)的坐标。最后根据P7，P8等控制点画出三阶贝塞尔曲线。</p>
+<pre><code>    private void initPoints() {
+    yOri = height - (height / 8);
+    mPoints = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; yCoordinateData.size(); i++) {
+        int x = (int) (this.x + this.xCoordinateSpacing * i + (getTextWidth(i) / 2));
+        int y = (int) (yOri - (((yOri * (1 - 0.5f)) * yCoordinateData.get(i)) / Collections.max(yCoordinateData)));
+        mPoints.add(new Point(x, y));
+    }
+    //该点用于绘制从最后一个点到屏幕最右侧到二阶贝塞尔曲线
+    mPoints.add(new Point(getWidth(), (int) (height - (height / 2.5))));
+}
+
+private void initMidPoints() {
+    mMidPoints = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; mPoints.size(); i++) {
+        Point midPoint = null;
+        if (i == mPoints.size() - 1) {
+            return;
+        } else {
+            midPoint = new Point((mPoints.get(i).x + mPoints.get(i + 1).x) / 2,
+                    (mPoints.get(i).y + mPoints.get(i + 1).y) / 2);
+        }
+        mMidPoints.add(midPoint);
+    }
+}
+
+private void initMidMidPoints() {
+    mMidMidPoints = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; mMidPoints.size(); i++) {
+        Point midMidPoint = null;
+        if (i == mMidPoints.size() - 1) {
+            return;
+        } else {
+            midMidPoint = new Point((mMidPoints.get(i).x + mMidPoints.get(i + 1).x) / 2,
+                    (mMidPoints.get(i).y + mMidPoints.get(i + 1).y) / 2);
+        }
+        mMidMidPoints.add(midMidPoint);
+    }
+}
+
+private void initControlPoints() {
+    mControlPoints = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; mPoints.size(); i++) {
+        if (i == 0 || i == mPoints.size() - 1) {
+            continue;
+        } else {
+            Point before = new Point();
+            Point after = new Point();
+            before.x = mPoints.get(i).x - mMidMidPoints.get(i - 1).x + mMidPoints.get(i - 1).x;
+            before.y = mPoints.get(i).y - mMidMidPoints.get(i - 1).y + mMidPoints.get(i - 1).y;
+            after.x = mPoints.get(i).x - mMidMidPoints.get(i - 1).x + mMidPoints.get(i).x;
+            after.y = mPoints.get(i).y - mMidMidPoints.get(i - 1).y + mMidPoints.get(i).y;
+            mControlPoints.add(before);
+            mControlPoints.add(after);
+        }
+    }
+}
+</code></pre><p>得出mControlPoints就是我们最终得出来的控制点，接下来的事情就很简单了<br>，我们再观察观察效果图，从屏幕最左边到第一个数据点和最后一个数据点到屏幕最右边，都有一个曲线连接，那么就随便写两个控制点用于绘制这两根曲线</p>
+<pre><code>    //绘制曲线
+private void drawCurve(Canvas canvas) {
+    // 重置路径
+    Path curvePath = new Path();
+    curvePath.reset();
+
+    Path gradientPath = new Path();
+    gradientPath.reset();
+
+    //从屏幕左边绘制到第一个点
+    curvePath.moveTo(0, (float) (height - (height / 2.5)));// 起点
+    curvePath.quadTo(0, (float) (height - (height / 2.5)),// 控制点
+            mPoints.get(0).x, mPoints.get(0).y);
+
+    gradientPath.moveTo(0, height - (height / 8));
+    gradientPath.lineTo(0, (float) (height - (height / 2.5)));
+    gradientPath.quadTo(0, (float) (height - (height / 2.5)),// 控制点
+            mPoints.get(0).x, mPoints.get(0).y);
+
+    for (int i = 0; i &lt; mPoints.size(); i++) {
+        if (i == 0) {// 第一条为二阶贝塞尔
+            curvePath.moveTo(mPoints.get(i).x, mPoints.get(i).y);// 起点
+            curvePath.quadTo(mControlPoints.get(i).x, mControlPoints.get(i).y,// 控制点
+                    mPoints.get(i + 1).x, mPoints.get(i + 1).y);
+
+
+            gradientPath.quadTo(mControlPoints.get(i).x, mControlPoints.get(i).y,// 控制点
+                    mPoints.get(i + 1).x, mPoints.get(i + 1).y);
+
+        } else if (i &lt; mPoints.size() - 1) {// 三阶贝塞尔
+            //二阶
+            curvePath.quadTo(mControlPoints.get(2 * i - 1).x, mControlPoints.get(2 * i - 1).y,
+                    mPoints.get(i + 1).x, mPoints.get(i + 1).y);
+
+
+            gradientPath.quadTo(mControlPoints.get(2 * i - 1).x, mControlPoints.get(2 * i - 1).y,
+                    mPoints.get(i + 1).x, mPoints.get(i + 1).y);
+        } else if (i == mPoints.size() - 2) {// 最后一条为二阶贝塞尔
+            curvePath.moveTo(mPoints.get(i).x, mPoints.get(i).y);// 起点
+            curvePath.quadTo(mControlPoints.get(mControlPoints.size() - 1).x,
+                    mControlPoints.get(mControlPoints.size() - 1).y,
+                    mPoints.get(i + 1).x, mPoints.get(i + 1).y);// 终点
+
+            gradientPath.quadTo(mControlPoints.get(mControlPoints.size() - 1).x,
+                    mControlPoints.get(mControlPoints.size() - 1).y,
+                    mPoints.get(i + 1).x, mPoints.get(i + 1).y);//终点
+        }
+    }
+
+    //绘制渐变色
+    gradientPath.lineTo(getWidth(), height - (height / 8));
+    gradientPath.lineTo(0, height - (height / 8));
+    float left = 0;
+    float top = getPaddingTop();
+    float bottom = height - (height / 8);
+    //渐变色中最深的颜色用绘制曲线的颜色
+    LinearGradient lg = new LinearGradient(left, top, left, bottom, curveColor,
+            chartMinimumColor, Shader.TileMode.CLAMP);// CLAMP重复最后一个颜色至最后
+    gradientColorPaint.setShader(lg);
+    gradientColorPaint.setXfermode(new PorterDuffXfermode(
+            android.graphics.PorterDuff.Mode.SRC_ATOP));
+    canvas.drawPath(gradientPath, gradientColorPaint);
+
+    canvas.drawPath(curvePath, curvePaint);
+}
+</code></pre><h3 id="绘制浮窗"><a href="#绘制浮窗" class="headerlink" title="绘制浮窗"></a>绘制浮窗</h3><p>要绘制出效果图那样的阴影很有难度，我暂且没有百分百的还原。我利用BlurMaskFilter来实现了类似阴影的效果，只需要在初始化画笔的时候，设置一下即可，当然，需要关闭硬件加速：</p>
+<pre><code>setLayerType(LAYER_TYPE_SOFTWARE, floatBoxPaint);
+floatBoxPaint.setMaskFilter(new BlurMaskFilter(30, BlurMaskFilter.Blur.SOLID));
+</code></pre><p>设置好画笔后，接下来就绘制浮窗：</p>
+<pre><code>    private void drawFloatBox(Canvas canvas) {
+    RectF rectF = new RectF();
+
+    for (int i = 0; i &lt; xCoordinateData.size(); i++) {
+        if (i == selectedIndex) {
+            rectF.left = mPoints.get(i).x - dip2px(47);
+            rectF.right = mPoints.get(i).x + dip2px(47);
+            rectF.top = mPoints.get(i).y - dip2px(70);
+            rectF.bottom = mPoints.get(i).y + dip2px(90);
+
+            canvas.drawRoundRect(rectF, 5, 5, floatBoxPaint);
+            coordinateTextPaint.setTextSize(60);
+            coordinateTextPaint.setColor(textSelectedColor);
+            canvas.drawText(yCoordinateData.get(i) + &quot;&quot;, this.x + xCoordinateSpacing * i,
+                    mPoints.get(i).y - dip2px(35), coordinateTextPaint);
+        }
+    }
+}
+</code></pre><h1 id="onTouchEvent"><a href="#onTouchEvent" class="headerlink" title="onTouchEvent"></a>onTouchEvent</h1><p>点击事件以及滑动事件，其实比较简单，先来看看滑动事件：<br>在处理滑动事件前，我们要明确几个东西：</p>
+<ol>
+<li><p>数据点的最小x坐标以及最大x坐标，用于记录滑动距离</p>
+<h3 id="滑动事件"><a href="#滑动事件" class="headerlink" title="滑动事件"></a>滑动事件</h3><p> case MotionEvent.ACTION_MOVE:</p>
+<pre><code>//如果屏幕不足以展示所有数据时
+if (xCoordinateSpacing * xCoordinateData.size() &gt; getWidth()) {
+    float dis = event.getX() - startX;
+    startX = event.getX();
+    if (x + dis &lt; minX) {
+        x = minX;
+    } else if (x + dis &gt; maxX) {
+        x = maxX;
+    } else {
+        x = x + dis;
+    }
+    invalidate();
+}
+break;
+</code></pre></li>
+</ol>
+<h3 id="点击事件"><a href="#点击事件" class="headerlink" title="点击事件"></a>点击事件</h3><pre><code>/**
+ * 点击X轴坐标或者折线节点
+ *
+ * @param event
+ */
+private void clickAction(MotionEvent event) {
+    int dp10 = dip2px(10);
+    float eventX = event.getX();
+    float eventY = event.getY();
+    for (int i = 0; i &lt; xCoordinateData.size(); i++) {
+        //节点
+        float x = mPoints.get(i).x;
+        float y = mPoints.get(i).y;
+        if (eventX &gt;= x - dp10 &amp;&amp; eventX &lt;= x + dp10 &amp;&amp;
+                eventY &gt;= y - dp10 &amp;&amp; eventY &lt;= y + dp10 &amp;&amp; selectedIndex != i) {//每个节点周围10dp都是可点击区域
+            selectedIndex = i;
+            invalidate();
+            return;
+        }
+        //X轴刻度
+        x = mPoints.get(i).x;
+        y = (height - (height / 8)) + ((height - (height - (height / 8))) / 2);
+        if (eventX &gt;= x - getTextWidth(i) / 2 - dp10 &amp;&amp; eventX &lt;= x + getTextWidth(i) + dp10 / 2 &amp;&amp;
+                eventY &gt;= y - dp10 &amp;&amp; eventY &lt;= y + dp10 &amp;&amp; selectedIndex != i) {
+            selectedIndex = i;
+            invalidate();
+            return;
+        }
+    }
+}
+</code></pre><h3 id="完整的onTouchEvent代码"><a href="#完整的onTouchEvent代码" class="headerlink" title="完整的onTouchEvent代码"></a>完整的onTouchEvent代码</h3><pre><code>    @Override
+public boolean onTouchEvent(MotionEvent event) {
+    this.getParent().requestDisallowInterceptTouchEvent(true);
+    switch (event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+            startX = event.getX();
+            break;
+        case MotionEvent.ACTION_MOVE:
+            //如果屏幕不足以展示所有数据时
+            if (xCoordinateSpacing * xCoordinateData.size() &gt; getWidth()) {
+                float dis = event.getX() - startX;
+                startX = event.getX();
+                if (x + dis &lt; minX) {
+                    x = minX;
+                } else if (x + dis &gt; maxX) {
+                    x = maxX;
+                } else {
+                    x = x + dis;
+                }
+                invalidate();
+            }
+            break;
+        case MotionEvent.ACTION_UP:
+            clickAction(event);
+            this.getParent().requestDisallowInterceptTouchEvent(false);
+
+            break;
+        case MotionEvent.ACTION_CANCEL:
+            this.getParent().requestDisallowInterceptTouchEvent(false);
+            break;
+    }
+    return true;
+}
+</code></pre><p>到这里，整个曲线图已经完成了，来看看最终效果<br><img src="/images/curveChartViewImg.png" alt=""></p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>其实最终效果与效果图还有些差距，包括浮窗的效果也不完美，不过倒是有个思路，将点击事件暴露出来，提供x，y坐标，点击后，弹出pop，可以达到一样的效果，有兴趣的话，各位可以试试看。<br>文章中若有错误，还希望各位提出来</p>
+<p><a href="https://github.com/rokudol/CurveChart" target="_blank" rel="noopener">源码</a></p>
 
       
     </div>
@@ -481,7 +921,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/总结/" rel="tag"># 总结</a>
+            <a href="/tags/自定义view/" rel="tag"># 自定义view</a>
           
         </div>
       
@@ -494,8 +934,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/序列化基础知识.html" rel="next" title="序列化基础知识">
-                <i class="fa fa-chevron-left"></i> 序列化基础知识
+              <a href="/2017年终总结以及新年计划.html" rel="next" title="2017年终总结以及新年计划">
+                <i class="fa fa-chevron-left"></i> 2017年终总结以及新年计划
               </a>
             
           </div>
@@ -503,10 +943,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/自定义view---利用贝塞尔曲线绘制的曲线图.html" rel="prev" title="自定义view---利用贝塞尔曲线绘制的曲线图">
-                自定义view---利用贝塞尔曲线绘制的曲线图 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -689,7 +1125,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#年终总结"><span class="nav-number">1.</span> <span class="nav-text">年终总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习上"><span class="nav-number">1.1.</span> <span class="nav-text">学习上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作上"><span class="nav-number">1.2.</span> <span class="nav-text">工作上</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#年计划"><span class="nav-number">2.</span> <span class="nav-text">年计划</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求分析"><span class="nav-number">1.</span> <span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义属性"><span class="nav-number">2.</span> <span class="nav-text">自定义属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#具体实现"><span class="nav-number">3.</span> <span class="nav-text">具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#onMeasure"><span class="nav-number">3.1.</span> <span class="nav-text">onMeasure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onDraw"><span class="nav-number">3.2.</span> <span class="nav-text">onDraw</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制title"><span class="nav-number">3.2.1.</span> <span class="nav-text">绘制title</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制x轴"><span class="nav-number">3.2.2.</span> <span class="nav-text">绘制x轴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制y轴"><span class="nav-number">3.2.3.</span> <span class="nav-text">绘制y轴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制图表"><span class="nav-number">3.2.4.</span> <span class="nav-text">绘制图表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制数据点"><span class="nav-number">3.2.5.</span> <span class="nav-text">绘制数据点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制曲线"><span class="nav-number">3.2.6.</span> <span class="nav-text">绘制曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制浮窗"><span class="nav-number">3.2.7.</span> <span class="nav-text">绘制浮窗</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#onTouchEvent"><span class="nav-number">4.</span> <span class="nav-text">onTouchEvent</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#滑动事件"><span class="nav-number">4.0.1.</span> <span class="nav-text">滑动事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#点击事件"><span class="nav-number">4.0.2.</span> <span class="nav-text">点击事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整的onTouchEvent代码"><span class="nav-number">4.0.3.</span> <span class="nav-text">完整的onTouchEvent代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
 
           </div>
