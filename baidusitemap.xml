@@ -88,12 +88,12 @@
     
     
   <url>
-    <loc>http://blog.rokudol.cn/MVP+Retrofit+RxJava+ButterKnife%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html</loc>
+    <loc>http://blog.rokudol.cn/DialogFragment%E4%B8%8EFragment%E4%B9%8B%E9%97%B4%E4%BA%92%E7%9B%B8%E4%BC%A0%E5%80%BC.html</loc>
     <lastmod>2018-04-07T02:37:46.199Z</lastmod>
     <data>
         <display>
-        <title>MVP+Retrofit+RxJava+ButterKnife的简单使用</title>
-        <pubTime>2017-05-20T01:17:39.000Z</pubTime>
+        <title>DialogFragment与Fragment之间互相传值</title>
+        <pubTime>2017-05-20T11:08:45.000Z</pubTime>
         
         <tag>Android</tag>
          
@@ -101,26 +101,6 @@
            
              
               <breadCrumb title="Android" url="http://blog.rokudol.cn/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.rokudol.cn/RecyclerView%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89.html</loc>
-    <lastmod>2018-04-07T02:37:46.199Z</lastmod>
-    <data>
-        <display>
-        <title>RecyclerView的基本使用与进阶（二）</title>
-        <pubTime>2017-05-27T07:05:12.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="RecyclerView" url="http://blog.rokudol.cn/categories/RecyclerView/"/>
           
         </display>
     </data>
@@ -148,12 +128,32 @@
 
     
   <url>
-    <loc>http://blog.rokudol.cn/DialogFragment%E4%B8%8EFragment%E4%B9%8B%E9%97%B4%E4%BA%92%E7%9B%B8%E4%BC%A0%E5%80%BC.html</loc>
+    <loc>http://blog.rokudol.cn/RecyclerView%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89.html</loc>
     <lastmod>2018-04-07T02:37:46.199Z</lastmod>
     <data>
         <display>
-        <title>DialogFragment与Fragment之间互相传值</title>
-        <pubTime>2017-05-20T11:08:45.000Z</pubTime>
+        <title>RecyclerView的基本使用与进阶（二）</title>
+        <pubTime>2017-05-27T07:05:12.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="RecyclerView" url="http://blog.rokudol.cn/categories/RecyclerView/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.rokudol.cn/MVP+Retrofit+RxJava+ButterKnife%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html</loc>
+    <lastmod>2018-04-07T02:37:46.199Z</lastmod>
+    <data>
+        <display>
+        <title>MVP+Retrofit+RxJava+ButterKnife的简单使用</title>
+        <pubTime>2017-05-20T01:17:39.000Z</pubTime>
         
         <tag>Android</tag>
          
