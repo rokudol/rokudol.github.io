@@ -7,19 +7,19 @@
     
     
   <url>
-    <loc>http://blog.rokudol.cn/%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html</loc>
+    <loc>http://blog.rokudol.cn/%E8%87%AA%E5%AE%9A%E4%B9%89view---%E5%BC%BA%E5%A4%A7%E7%9A%84%E5%AF%86%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86.html</loc>
     <lastmod>2018-04-07T02:37:46.200Z</lastmod>
     <data>
         <display>
-        <title>序列化基础知识</title>
-        <pubTime>2017-12-27T03:16:01.000Z</pubTime>
+        <title>自定义view---强大的密码输入框</title>
+        <pubTime>2017-08-08T06:42:01.000Z</pubTime>
         
-        <tag>基础</tag>
+        <tag>Android</tag>
          
          
            
              
-              <breadCrumb title="基础" url="http://blog.rokudol.cn/categories/%E5%9F%BA%E7%A1%80/"/>
+              <breadCrumb title="自定义View" url="http://blog.rokudol.cn/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/"/>
           
         </display>
     </data>
@@ -48,19 +48,19 @@
 
     
   <url>
-    <loc>http://blog.rokudol.cn/%E8%87%AA%E5%AE%9A%E4%B9%89view---%E5%BC%BA%E5%A4%A7%E7%9A%84%E5%AF%86%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86.html</loc>
+    <loc>http://blog.rokudol.cn/%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html</loc>
     <lastmod>2018-04-07T02:37:46.200Z</lastmod>
     <data>
         <display>
-        <title>自定义view---强大的密码输入框</title>
-        <pubTime>2017-08-08T06:42:01.000Z</pubTime>
+        <title>序列化基础知识</title>
+        <pubTime>2017-12-27T03:16:01.000Z</pubTime>
         
-        <tag>Android</tag>
+        <tag>基础</tag>
          
          
            
              
-              <breadCrumb title="自定义View" url="http://blog.rokudol.cn/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/"/>
+              <breadCrumb title="基础" url="http://blog.rokudol.cn/categories/%E5%9F%BA%E7%A1%80/"/>
           
         </display>
     </data>
@@ -108,26 +108,6 @@
 
     
   <url>
-    <loc>http://blog.rokudol.cn/RecyclerView%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89.html</loc>
-    <lastmod>2018-04-07T02:37:46.199Z</lastmod>
-    <data>
-        <display>
-        <title>RecyclerView的基本使用与进阶（二）</title>
-        <pubTime>2017-05-27T07:05:12.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="RecyclerView" url="http://blog.rokudol.cn/categories/RecyclerView/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.rokudol.cn/MVP+Retrofit+RxJava+ButterKnife%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.html</loc>
     <lastmod>2018-04-07T02:37:46.199Z</lastmod>
     <data>
@@ -141,6 +121,26 @@
            
              
               <breadCrumb title="Android" url="http://blog.rokudol.cn/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.rokudol.cn/RecyclerView%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89.html</loc>
+    <lastmod>2018-04-07T02:37:46.199Z</lastmod>
+    <data>
+        <display>
+        <title>RecyclerView的基本使用与进阶（二）</title>
+        <pubTime>2017-05-27T07:05:12.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="RecyclerView" url="http://blog.rokudol.cn/categories/RecyclerView/"/>
           
         </display>
     </data>
